@@ -16,6 +16,7 @@ class Main:
         pygame.init()
         self.screen = pygame.display.set_mode(size)
         self.dice = 1
+        self.roll_dice_count = 2
 
         self.board = Board(self.screen)
 
@@ -423,11 +424,21 @@ class Main:
         player = self.get_player_turn(self.turn)
 
         if player == "dice":
-            self.turn = self.turn + 1
+            self.turn += 1
+
+        if player != "dice" and self.dice != 6 and player.all_out:
+            if self.roll_dice_count > 0:
+                self.turn = (self.turn + 7) % 8
+                self.roll_dice_count -= 1
+                return
 
         if player != "dice" and (self.dice != 6 or
                                  self.cant_move_count(player) == 4):
+            next_player = self.get_player_turn((self.turn + 2) % 8)
+            if next_player.all_out:
+                self.roll_dice_count = 2
             self.turn = (self.turn + 1) % 8
+
         if (player != "dice" and self.dice == 6 and
            self.cant_move_count(player) != 4):
             self.turn = (self.turn + 7) % 8
