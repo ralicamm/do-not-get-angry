@@ -17,7 +17,6 @@ class Player(pygame.sprite.Sprite):
         self.all_out = True
         self.have_out = True
         self.score = 0
-        self.board_pos = 0
         self.pieces = pygame.sprite.Group()
 
         for i in range(4):
@@ -28,6 +27,7 @@ class Player(pygame.sprite.Sprite):
                  self.OUT[self.color][1] + self.PLACES[i][1] - self.IMG_PLACE),
                 self.image.get_size())
             piece.pos = 0
+            piece.board_pos = 0
             piece.close_in_front = 0
             piece.close_behind = 0
             self.rect = piece.rect

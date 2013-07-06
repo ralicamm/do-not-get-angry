@@ -367,7 +367,7 @@ class Main:
                 return rect
 
     def get_next_board_pos(self, piece, color):
-        """Returns the number of the board position of the pice
+        """Returns the number of the board position of the piece
         if it moves with the number on dice positions"""
         if piece.board_pos == 0 and self.dice == 6:
             return {
