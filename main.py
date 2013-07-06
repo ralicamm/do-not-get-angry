@@ -181,15 +181,15 @@ class Main:
     def play(self, player):
         """Controls the moving of the pieces if the player is a computer"""
         pygame.time.delay(1000)
-        if self.cant_move_count(player) == 4:
+        count = self.cant_move_count(player)
+        if count == 4:
             self.change_turn()
             return
-        self.decide_move(player)
+        self.decide_move(player, count)
         pygame.time.delay(500)
 
-    def decide_move(self, player):
+    def decide_move(self, player, count):
         """Desides what piece to move"""
-        count = self.cant_move_count(player)
         if count == 3:
             for piece in player.pieces:
                 if self.can_move(player, piece):
