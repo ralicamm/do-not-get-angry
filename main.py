@@ -9,16 +9,20 @@ clock = pygame.time.Clock()
 
 
 class Main:
+    STATUS_GAME_IN_PROGRESS = 'Game in progress..'
     running = True
 
     def __init__(self, size):
         """Adds status lable, the dice and the players"""
         pygame.init()
         self.screen = pygame.display.set_mode(size)
+        self.status = self.STATUS_GAME_IN_PROGRESS
         self.dice = 1
         self.roll_dice_count = 2
 
         self.board = Board(self.screen)
+
+        self.board.add_label(595, 70, self.status, 20, self.board.WHITE)
 
         """Add dice"""
         dice = pygame.image.load(self.get_dice_png(self.dice))
@@ -49,13 +53,7 @@ class Main:
                 if event.type == pygame.QUIT:
                     return
 
-            """Check if any player won the game and change status."""
-            for p in self.player_list:
-                if p.score == 4:
-                    self.status = "{} wins".format(p.get_color_name())
-                    self.board.add_label(595, 70, self.status,
-                                         20, self.board.WHITE)
-                    return
+            self.check_winner()
 
             """Add game turn label"""
             self.board.add_label(595, 190, self.get_turn_label(),
@@ -354,6 +352,15 @@ class Main:
         self.sprites.draw(self.screen)
         pygame.display.flip()
         pygame.time.delay(400)
+
+    def check_winner(self):
+        """Check if any player won the game and change status."""
+        for p in self.player_list:
+            if p.score == 4:
+                self.status = "{} wins!".format(p.get_color_name())
+                self.board.add_label(595, 70, self.status,
+                                     20, self.board.WHITE)
+                return
 
     def get_free_place(self, player):
         """Returns one free place of the player's out teritory"""

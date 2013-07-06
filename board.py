@@ -2,7 +2,6 @@ import pygame
 
 
 class Board:
-    STATUS_GAME_IN_PROGRESS = 'Game in progress..'
     BACKGROUND = (164, 211, 238)
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
@@ -25,11 +24,8 @@ class Board:
 
     def __init__(self, screen):
         self.screen = screen
-        self.status = self.STATUS_GAME_IN_PROGRESS
 
         self.draw_board()
-
-        self.add_label(595, 70, self.status, 20, self.WHITE)
 
     def add_label(self, x, y, label, size, color):
         font = pygame.font.Font(None, size)
